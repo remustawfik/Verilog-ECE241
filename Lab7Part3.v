@@ -73,19 +73,19 @@ module FixMe
 	hex_decoder H1(
         .hex_digit(x[7:4]), 
         .segments(HEX1)
-			);	
-hex_decoder H2(
+	);	
+        hex_decoder H2(
         .hex_digit(y[3:0]), 
         .segments(HEX2)
         );
 	hex_decoder H3(
         .hex_digit(y[6:4]), 
         .segments(HEX3)
-			);		
-   hex_decoder H4(
+        );		
+        hex_decoder H4(
         .hex_digit(dataCounter[3:0]), 
         .segments(HEX4)
-			);		     			
+        );		     			
 	
 
 	// Create an Instance of a VGA controller - there can be only one!
@@ -128,13 +128,13 @@ module control (clock,resetn,
    load_Del,
    load_New,
    load_Reset,
-	load_Done,
-	letItHappen,
-	enable1,
-	upFlag,
-	rightFlag,
-	DONEMAKINSQUARE,
-	doughnutMove);
+   load_Done,
+   letItHappen, 
+   enable1,
+   upFlag,
+   rightFlag,
+   DONEMAKINSQUARE,
+   doughnutMove);
 
 	input clock,resetn,enable1,upFlag,rightFlag,DONEMAKINSQUARE,doughnutMove;
 	output reg    load_shiftD,load_shiftU,load_shiftR,load_shiftL,load_Del,load_New,letItHappen,load_Done,load_Reset;
@@ -164,9 +164,9 @@ always@(*)
 		
 		S_StartAnimation: next_state = upFlag? S_ShiftUp : S_ShiftDown;
 		
-      S_ShiftUp: next_state = rightFlag? S_ShiftRight : S_ShiftLeft; 
+                S_ShiftUp: next_state = rightFlag? S_ShiftRight : S_ShiftLeft; 
   
-      S_ShiftDown: next_state = rightFlag? S_ShiftRight : S_ShiftLeft; 
+                S_ShiftDown: next_state = rightFlag? S_ShiftRight : S_ShiftLeft; 
 		
 		S_ShiftLeft: next_state = S_PrintNew;
 		
@@ -240,71 +240,68 @@ always @(*)
 		load_Done = 1'b0;
    end
 	
-	S_ShiftLeft: begin
-		load_shiftD=1'b0;       
+   S_ShiftLeft: begin
+	  load_shiftD=1'b0;       
 	  load_shiftU=1'b0;
 	  load_shiftR=1'b0;
 	  load_Del=1'b0;
 	  load_New=1'b0;
 	  load_Reset = 1'b0;
 	  letItHappen = 1'b0;
- load_Done = 1'b0;
-		load_shiftL = 1'b1; 
+          load_Done = 1'b0;
+          load_shiftL = 1'b1; 
    end
 	
-	S_DeleteOld: begin
+   S_DeleteOld: begin
 	  load_shiftD=1'b0;       
 	  load_shiftU=1'b0;
 	  load_shiftR=1'b0;
 	  load_shiftL=1'b0;
 	  load_New=1'b0;
-	  load_Reset = 1'b0;
-	  
-	load_Done = 1'b0;
-	
-		load_Del = 1'b1;
-	   letItHappen = 1'b1;
+	  load_Reset = 1'b0;  
+	  load_Done = 1'b0;
+          load_Del = 1'b1;
+	  letItHappen = 1'b1;
 		
    end
 	
-	S_PrintNew: begin
+   S_PrintNew: begin
  
- load_shiftD=1'b0;       
-  load_shiftU=1'b0;
-  load_shiftR=1'b0;
-  load_shiftL=1'b0;
-  load_Del=1'b0;
-  load_Reset = 1'b0;
-  load_Done = 1'b0;
- 
-		load_New = 1'b1;
-	   letItHappen = 1'b1;
+	 load_shiftD=1'b0;       
+	 load_shiftU=1'b0;
+	 load_shiftR=1'b0;
+	 load_shiftL=1'b0;
+	 load_Del=1'b0;
+	 load_Reset = 1'b0;
+	 load_Done = 1'b0;
+         load_New = 1'b1;
+         letItHappen = 1'b1;
 		
    end
-	S_Reset: begin
+   S_Reset: begin
 	
-		load_shiftD=1'b0;       
-		load_shiftU=1'b0;
-		load_shiftR=1'b0;
-		load_shiftL=1'b0;
-		load_Del=1'b0;
-		load_New=1'b0;
-		letItHappen = 1'b0;
-		load_Reset = 1'b1; 
-		load_Done = 1'b0;
+	 load_shiftD=1'b0;       
+	 load_shiftU=1'b0;
+	 load_shiftR=1'b0;
+	 load_shiftL=1'b0;
+	 load_Del=1'b0;
+	 load_New=1'b0;
+	 letItHappen = 1'b0;
+	 load_Reset = 1'b1; 
+	 load_Done = 1'b0;
 		
    end
-	S_Done: begin
+   S_Done: begin
 	
 	load_shiftD=1'b0;       
-  load_shiftU=1'b0;
-  load_shiftR=1'b0;
-  load_shiftL=1'b0;
-  load_Del=1'b0;
-  load_New=1'b0;
-  load_Reset = 1'b0;
-  letItHappen = 1'b0;
-  load_Done = 1'b1; 
+        load_shiftU=1'b0;
+  	load_shiftR=1'b0;
+  	load_shiftL=1'b0;
+  	load_Del=1'b0;
+  	load_New=1'b0;
+  	load_Reset = 1'b0;
+  	letItHappen = 1'b0;
+  	load_Done = 1'b1; 
    end
 endcase
 end
