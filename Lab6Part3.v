@@ -6,19 +6,18 @@ module Lab6Part3(SW,HEX0,HEX2,HEX4,HEX5,KEY,LEDR,CLOCK_50);
     output [9:0] LEDR;
     output [6:0] HEX0, HEX2,HEX4,HEX5;
 	 
-	 wire resetM;
-	 wire go;
-	 wire [7:0] DATAIN;
-	 wire [3:0] DDOUT;
-	 wire [4:0] DVOUT;
-	 wire [4:0] AOUT;
+    wire resetM;
+    wire go;
+    wire [7:0] DATAIN;
+    wire [3:0] DDOUT;
+    wire [4:0] DVOUT;
+    wire [4:0] AOUT;
 	 
-	 assign go = ~KEY[1];
+    assign go = ~KEY[1];
     assign resetM = KEY[0];
-	 assign DATAIN = SW[7:0];
+    assign DATAIN = SW[7:0];
 
-	 
-	 Part3 workworkworkworkworkwork(
+    Part3 block0(
 		.clkn(CLOCK_50),
 		.resetn(resetM), 
 		.gon(go),
@@ -28,16 +27,15 @@ module Lab6Part3(SW,HEX0,HEX2,HEX4,HEX5,KEY,LEDR,CLOCK_50);
 		.A_out(AOUT)	 
 	 );
 	 
-	 hex_decoder pls(
+    hex_decoder block1(
 		.hex_digit(DDOUT), 
 		.segments(HEX2)
-					);
+	);
 					
-	 hex_decoder pls2(
+    hex_decoder block2(
 		.hex_digit(DVOUT), 
 		.segments(HEX0)
-					);	 
-
+	);	 
 endmodule 
 
 //-----------------------------------------------------------------------------------
@@ -52,7 +50,7 @@ wire ldDDn, ldDVn,ldComparen, ldShiftn, ldALUn;
 wire ld_alu_out;
 wire alu_op;
 
-control doggo (
+control Ctrl (
 					.clk(clkn),
 					.reset(resetn),
 					.go(gon),
@@ -64,7 +62,7 @@ control doggo (
 					.aluSel(alu_op)
 					);
 					
-dataPath pupper (
+dataPath DtPth (
 					.clk(clkn),
 					.reset(resetn),
 					.go(gon),
@@ -222,12 +220,12 @@ module dataPath(clk,reset,go,ldDD,ldDV,ldShift,ldCompare,ldALU,dataIn,DDout, alu
  always@(posedge clk) begin
         
 		  if(!resetn) begin
-            RegA <= 5'b0; 
-            RegDV <= 5'b0; 
-            RegDD <= 4'b0; 
-				ALU_out <= 5'b0;
-				shiftResultA  <= 5'b0;
-				shiftResultDD <= 4'b0;
+                     RegA <= 5'b0; 
+                     RegDV <= 5'b0; 
+                     RegDD <= 4'b0; 
+		     ALU_out <= 5'b0;
+		     shiftResultA  <= 5'b0;
+		     shiftResultDD <= 4'b0;
 	
         end
         else begin
