@@ -12,40 +12,39 @@ module Lab5Part1(SW,KEY,LEDR,HEX0,HEX1);
 	
 	
 	HEX_NUM hex0(
-						.a(Qin[3]),
-						.b(Qin[2]),
-						.c(Qin[1]),
-						.d(Qin[0]),
-						.H0(HEX0[0]),
-						.H1(HEX0[1]),
-						.H2(HEX0[2]),
-						.H3(HEX0[3]),
-						.H4(HEX0[4]),
-						.H5(HEX0[5]),
-						.H6(HEX0[6])
-						
-						);
+			.a(Qin[3]),
+			.b(Qin[2]),
+			.c(Qin[1]),
+			.d(Qin[0]),
+			.H0(HEX0[0]),
+			.H1(HEX0[1]),
+			.H2(HEX0[2]),
+			.H3(HEX0[3]),
+		        .H4(HEX0[4]),
+			.H5(HEX0[5]),
+			.H6(HEX0[6])
+		     );
 						
 	HEX_NUM hex1(
-						.a(Qin[7]),
-						.b(Qin[6]),
-						.c(Qin[5]),
-						.d(Qin[4]),
-						.H0(HEX1[0]),
-						.H1(HEX1[1]),
-						.H2(HEX1[2]),
-						.H3(HEX1[3]),
-						.H4(HEX1[4]),
-						.H5(HEX1[5]),
-						.H6(HEX1[6])
-						);
+			.a(Qin[7]),
+			.b(Qin[6]),
+			.c(Qin[5]),
+			.d(Qin[4]),
+			.H0(HEX1[0]),
+			.H1(HEX1[1]),
+			.H2(HEX1[2]),
+			.H3(HEX1[3]),
+			.H4(HEX1[4]),
+			.H5(HEX1[5]),
+			.H6(HEX1[6])
+		     );
 					
-	ate_bit_counter final(
-					.Enable(SW[1]),
-					.clock(~KEY[0]),
-					.clear_b(SW[0]),
-					.Q(Qin)
-					);
+       ate_bit_counter final(
+			.Enable(SW[1]),
+			.clock(~KEY[0]),
+			.clear_b(SW[0]),
+			.Q(Qin)
+		     );
 	
 	
 endmodule
@@ -92,9 +91,7 @@ module T_FF(clock,Qout,T,clear_b);
 	
 	always@(*)
 	begin
-	
 		XOR_out = T ^ Qout;
-	
 	end
 	
 	
@@ -106,9 +103,7 @@ module T_FF(clock,Qout,T,clear_b);
 		Qout<= 1'b0;
 		
 	else
-	
 		Qout<= XOR_out;
-	
 	end
 	
 
@@ -121,13 +116,13 @@ module HEX_NUM(a,b,c,d, H0,H1,H2,H3,H4,H5,H6);
 	input a,b,c,d;
 	output H0,H1,H2,H3,H4,H5,H6;
 	
-   h0_block DOGGO0(a, b, c, d,H0);
-   h1_block DOGGO1(a, b, c, d,H1);
-   h2_block DOGGO2(a, b, c, d,H2);
-   h3_block DOGGO3(a, b, c, d,H3);
-   h4_block DOGGO4(a, b, c, d,H4);
-   h5_block DOGGO5(a, b, c, d,H5);
-	h6_block DOGGO6(a, b, c, d,H6);
+   h0_block HB0(a, b, c, d,H0);
+   h1_block HB1(a, b, c, d,H1);
+   h2_block HB2(a, b, c, d,H2);
+   h3_block HB3(a, b, c, d,H3);
+   h4_block HB4(a, b, c, d,H4);
+   h5_block HB5(a, b, c, d,H5);
+   h6_block HB6(a, b, c, d,H6);
 	
 endmodule
 	
