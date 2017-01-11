@@ -68,9 +68,9 @@ module Lab7Part2(
 		defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
 		defparam VGA.BACKGROUND_IMAGE = "black.mif";
 			
-	control puppers(
+	control block0(
 						 .L_X(Lx),
-					    .L_Y(Ly),
+					         .L_Y(Ly),
 						 .plot(plot),
 						 .L_C(Lc),
 						 .enable(enbl),
@@ -79,21 +79,21 @@ module Lab7Part2(
 						 .clk(CLOCK_50)
 						 );
 						 
-	datapath PUPPERZ(
-							.L_X(Lx),
-							.L_Y(Ly),
-							.L_C(Lc),
-							.L_B(~KEY[2]),
-							.Xin(SW[6:0]),
-							.Yin(SW[6:0]),
-							.enable(enbl),
-							.plot(plot),
-							.resetn(reset),
-							.clk(CLOCK_50),
-							.Xout(x),
-							.Yout(y),
-							.color(colour),
-							.Cout(DataColor)
+	datapath block1(
+						 .L_X(Lx),
+						 .L_Y(Ly),
+					         .L_C(Lc),
+						 .L_B(~KEY[2]),
+						 .Xin(SW[6:0]),
+						 .Yin(SW[6:0]),
+						 .enable(enbl),
+						 .plot(plot),
+						 .resetn(reset),
+						 .clk(CLOCK_50),
+						 .Xout(x),
+						 .Yout(y),
+						 .color(colour),
+						 .Cout(DataColor)
 							);
 	
 	
@@ -108,22 +108,22 @@ output reg enable, L_X,L_C,L_Y;
 reg [3:0] current_state, next_state;
   	 
 	
-	localparam  S_LOAD_X    	= 3'd0,
-            	S_LOAD_WAIT_X	= 3'd1,
-            	S_LOAD_Y   	   = 3'd2,
-         	   S_LOAD_WAIT_Y  = 3'd3,
-					CYCLE_0        = 3'd4,
-					S_DONE         = 3'd5;
+	localparam  S_LOAD_X       = 3'd0,
+            	    S_LOAD_WAIT_X  = 3'd1,
+            	    S_LOAD_Y   	   = 3'd2,
+         	    S_LOAD_WAIT_Y  = 3'd3,
+		    CYCLE_0        = 3'd4,
+		    S_DONE         = 3'd5;
 					
 	always@(*)
 	begin: state_table
         	case (current_state)
              	S_LOAD_X: next_state = go ? S_LOAD_WAIT_X : S_LOAD_X;                            	
-               S_LOAD_WAIT_X: next_state = go ? S_LOAD_WAIT_X : S_LOAD_Y; 
-					S_LOAD_Y: next_state = go ? S_LOAD_WAIT_Y : S_LOAD_Y;    
-					S_LOAD_WAIT_Y: next_state = go ? S_LOAD_WAIT_Y : CYCLE_0; 
-					CYCLE_0: next_state = S_DONE;
-					S_DONE: next_state = S_LOAD_X;
+                S_LOAD_WAIT_X: next_state = go ? S_LOAD_WAIT_X : S_LOAD_Y; 
+		S_LOAD_Y: next_state = go ? S_LOAD_WAIT_Y : S_LOAD_Y;    
+		S_LOAD_WAIT_Y: next_state = go ? S_LOAD_WAIT_Y : CYCLE_0; 
+		CYCLE_0: next_state = S_DONE;
+		S_DONE: next_state = S_LOAD_X;
                                             	                                     	
         	default: next_state = S_LOAD_X;
 			endcase
@@ -134,39 +134,39 @@ always @(*)
 	begin: enable_signals
     	// By default make all our signals 0
     	L_X = 1'b0;
-      enable = 1'b0;
-      L_C = 1'b0;
-		L_Y = 1'b0;
+        enable = 1'b0;
+        L_C = 1'b0;
+	L_Y = 1'b0;
   
  
     	case (current_state)
         	S_LOAD_X: begin
-                        L_X = 1'b1;
-                        L_C = 1'b1;
-								enable = 1'b0;	
-								L_Y = 1'b0;
-						  end
+                L_X = 1'b1;
+                L_C = 1'b1;
+		enable = 1'b0;	
+		L_Y = 1'b0;
+	        end
 						  
 			S_LOAD_Y: begin
                         L_X = 1'b0;
                         L_C = 1'b0;
-								enable = 1'b0;	
-								L_Y = 1'b1;
-						  end
+			enable = 1'b0;	
+			L_Y = 1'b1;
+			end
 						  
 			CYCLE_0: begin
                         L_X = 1'b0;
                         L_C = 1'b0;
-								enable = 1'b1;	
-								L_Y = 1'b0;
-						  end
+			enable = 1'b1;	
+			L_Y = 1'b0;
+			end
 						  
 			S_DONE: begin
                         L_X = 1'b0;
                         L_C = 1'b0;
-								enable = 1'b1;	
-								L_Y = 1'b0;
-						  end
+			enable = 1'b1;	
+			L_Y = 1'b0;
+			end
 	  endcase
 	end
 					
