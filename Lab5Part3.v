@@ -49,18 +49,18 @@ module Lab5Part3(SW,KEY,LEDR,CLOCK_50);
 	endcase
 	end
 	
-	Save_Our_Shit pupper(
-						.muxSel(muxS),
-						.Letters(LettersIn),
-						.MorseO(MorseOut),
-						.clock(Enable),
-						.reset(resetm)
-						);
+	MorseCode mainBlock(
+			    .muxSel(muxS),
+			    .Letters(LettersIn),
+			    .MorseO(MorseOut),
+			    .clock(Enable),
+			    .reset(resetm)
+			   );
 	
 endmodule
 
 //-------------------------------------------------------------------------------
-module Save_Our_Shit(muxSel,Letters,MorseO,clock,reset);
+module MorseCode(muxSel,Letters,MorseO,clock,reset);
 	
 	input [10:0] Letters;
 	input muxSel;
