@@ -16,12 +16,12 @@ assign data = SW[3:0];
 assign writeEn = SW[9];
 
 
-ram32x4 sAD(Address,~KEY[0],data,writeEn,Q);
+ram32x4 Memory(Address,~KEY[0],data,writeEn,Q);
 	
-hex_decoder Sad2(Q,HEX0);
-hex_decoder Sad2(data,HEX2);
-hex_decoder Sad3(Address[3:0],HEX4);
-hex_decoder Sad4(Address[4],HEX5);
+hex_decoder block0(Q,HEX0);
+hex_decoder block1(data,HEX2);
+hex_decoder block2(Address[3:0],HEX4);
+hex_decoder block3(Address[4],HEX5);
 
 
 endmodule 
