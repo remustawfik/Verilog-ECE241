@@ -19,15 +19,15 @@ module Lab4Part3(SW, LEDR, KEY);
 	assign LEDR[7:0] = Qmain;
 	
 	
-	AS_input scissors(
-							.ASin(ASRight),
-							.Q(Qmain),
-							.DATA_IN(DATA_INmain),
-							.shiftR(shiftRmain),
-							.loadn(loadnmain),
-							.clock(mainclock),
-							.reset(resetmain)
-							);
+	AS_input mainBlock(
+			.ASin(ASRight),
+			.Q(Qmain),
+			.DATA_IN(DATA_INmain),
+			.shiftR(shiftRmain),
+			.loadn(loadnmain),
+			.clock(mainclock),
+			.reset(resetmain)
+			);
 
 	
 endmodule 
@@ -40,8 +40,8 @@ module AS_input(ASin,Q,DATA_IN, shiftR, loadn, clock, reset);
 	wire [7:0] QAS;
 	wire [7:0] Qreg;
 	
-	AS_register smol(QAS,DATA_IN,shiftR, loadn,clock,reset);
-	rotate_register toll(Qreg,DATA_IN,shiftR,loadn,clock,reset);
+	AS_register ASR(QAS,DATA_IN,shiftR, loadn,clock,reset);
+	rotate_register RR(Qreg,DATA_IN,shiftR,loadn,clock,reset);
 
 	assign Q = ASin ? QAS : Qreg;
 
@@ -89,8 +89,8 @@ module register_bit(right,left, Qr, DATA_INr, shiftRr,loadnr,clockr,resetr);
 	output reg Qr;
 	wire LRout,Dinput;
 
-	mux2to1 doggo1(right,left,shiftRr,LRout);
-	mux2to1 doggo2(DATA_INr,LRout,loadnr,Dinput);
+	mux2to1 block0(right,left,shiftRr,LRout);
+	mux2to1 block1(DATA_INr,LRout,loadnr,Dinput);
 
 	always@(posedge clockr)
 
